@@ -1,0 +1,53 @@
+* {
+}
+
+html{
+  font-size: .75em !important;
+  font-family: Arial !important;
+}
+
+body{
+  background-color: #111;
+}
+
+#results{
+    width:50%;
+    //pointer-events: none;
+    z-index: -999;
+}
+
+.thumb{
+  width: 100%;
+  margin-top: -10px;
+}
+
+.thumbWrapper{
+  width: 120px;
+  height: 70px;
+  overflow: hidden;
+  border: 2px solid black;
+  margin-bottom: .25em;
+}
+
+.item{
+  margin: 0;
+  float: left;
+  width: 120px;
+  background-color: rgba(255,255,255,.025);
+  padding: .5em;
+  margin: .2em;
+  height: 120px;
+  overflow:hidden;
+  border-radius: 2px;
+}
+
+.item:hover{
+  background-color: rgba(255,255,255,.05);
+  cursor: pointer;
+}
+
+.titleOverlay{
+  color: #CCC;
+  //overflow: hidden;
+  //height: 40px;
+}
