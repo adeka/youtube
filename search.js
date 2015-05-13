@@ -11,7 +11,7 @@ $("#search-button").click(function(){
     var query = $('#query').attr('value');
     $.get(baseURL+'/search?part=snippet'+
                      '&q='+query+
-                     '&maxResults=10'+
+                     '&maxResults=20'+
                      '&type=video'+
                      '&key='+key, function(data, status){
         console.log(data);
@@ -37,8 +37,6 @@ $("#search-button").click(function(){
 var player;
 function CreatePlayer(id) {
   player = new YT.Player('player', {
-    height: '390',
-    width: '640',
     videoId: id,
     events: {
       'onReady': onPlayerReady,
