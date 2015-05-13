@@ -2,16 +2,16 @@
 var key = 'AIzaSyDwozRpbCqV5G7GjCI0T1QB7QES27rjHWY';
 var baseURL = 'https://www.googleapis.com/youtube/v3';
 
-$(".item").click(function(){
-    console.log("ASDF");
-});
+
+
+
 
 $("#search-button").click(function(){
     $("#results").empty();
     var query = $('#query').attr('value');
     $.get(baseURL+'/search?part=snippet'+
                      '&q='+query+
-                     '&maxResults=50'+
+                     '&maxResults=10'+
                      '&type=video'+
                      '&key='+key, function(data, status){
         console.log(data);
@@ -24,6 +24,11 @@ $("#search-button").click(function(){
           var result = "<div class='item' data-id=" + id + ">" + thumb + title + "</div>";
           $("#results").append(result);
         }
+        $(".item").click(function(){
+          $("#playerWrapper").empty();
+          $("#playerWrapper").append('<div id="player"></div>');
+          CreatePlayer($(this).data("id"));
+        });
     });
 });
 
@@ -49,7 +54,7 @@ function onPlayerReady(event) {
 var done = false;
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING && !done) {
-    setTimeout(stopVideo, 6000);
+    //setTimeout(stopVideo, 6000);
     done = true;
   }
 }
