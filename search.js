@@ -27,6 +27,8 @@ $("#submit").click(function(){
   Search();
 });
 
+
+
 function Search(){
   $("#results").empty();
   var query = $('#query').val();
@@ -43,7 +45,7 @@ function Search(){
         var titleText = data.items[i].snippet.title;
         var title = "<div class='titleOverlay'>" + titleText + "</div>";
         var thumb = "<div class='thumbWrapper'><img class='thumb' src=" + thumbnailURL + "></img></div>";
-        var result = "<div class='item' data-id=" + id + ">" + thumb + title + "</div>";
+        var result = "<div class='item draggable' data-id=" + id + ">" + thumb + title + "</div>";
         $("#results").append(result);
       }
       $(".item").click(function(){
@@ -51,6 +53,55 @@ function Search(){
         $("#playerWrapper").append('<div id="player"></div>');
         CreatePlayer($(this).data("id"));
       });
+
+      /*
+      $( "#queue" ).sortable({
+         axis: "x",
+         opacity: 0.5,
+         start: function(e, ui){
+         $(ui.placeholder).hide(300);
+         },
+         change: function (e,ui){
+         $(ui.placeholder).hide().show(300);
+         }
+      });
+      $( "#queue" ).disableSelection();
+      */
+
+      $(function() {
+          $( "#queue" ).sortable({
+            //items: "> .item",
+            //handle: "div",
+
+            //tolerance: "pointer",
+            //distance: 60,
+            cursorAt: { left: 60 },
+            axis: "x",
+            revert: true,
+
+            //helper: "clone",
+            placeholder: "sortable-placeholder",
+
+            //zIndex: 9999,
+            start: function(e, ui){
+              //$(ui.placeholder).hide(200);
+            },
+            change: function (e,ui){
+              $(ui.placeholder).hide().show(200);
+            },
+            scroll: false
+          });
+
+          $( ".draggable" ).draggable({
+            connectToSortable: "#queue",
+            helper: "clone",
+            revert: "invalid",
+            cursorAt: { left: 60 },
+            zIndex: 9999999,
+            scroll: false
+          });
+          //$( "ul, li" ).disableSelection();
+        });
   });
 }
 
