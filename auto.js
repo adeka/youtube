@@ -1,65 +1,25 @@
-/* AutoComplete */
-$("#youtube").autocomplete({
-    source: function(request, response){
-        /* google geliştirici kimliği (zorunlu değil) */
-        var apiKey = 'AIzaSyDwozRpbCqV5G7GjCI0T1QB7QES27rjHWY';
-        /* aranacak kelime */
-        var query = request.term;
-        /* youtube sorgusu */
-        $.ajax({
-            url: "http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1&q="+query+"&key="+apiKey+"&format=5&alt=json&callback=?",
-            dataType: 'jsonp',
-            success: function(data, textStatus, request) {
-               response( $.map( data[1], function(item) {
-                    return {
-                        label: item[0],
-                        value: item[0]
-                    }
-                }));
-            }
-        });
-    },
-    /* seçilene işlem yapmak için burayı kullanabilirsin */
-    select: function( event, ui ) {
-        $.youtubeAPI(ui.item.label);
-    }
-});
+var suggestCallBack; // global var for autocomplete jsonp
 
-/* Butona Basınca Arama */
-$('button#submit').click(function(){
-    var value = $('input#youtube').val();
-        $.youtubeAPI(value);
-});
-
-/* Youtube Arama Fonksiyonu */
-$.youtubeAPI = function(kelime){
-    var sonuc = $('#sonuc');
-    sonuc.html('Arama gerçekleştiriliyor...');
-    $.ajax({
-        type: 'GET',
-        url: 'http://gdata.youtube.com/feeds/api/videos?q=' + kelime + '&max-results=15&v=2&alt=jsonc',
-        dataType: 'jsonp',
-        success: function( veri ){
-            if( veri.data.items ){
-                sonuc.empty();
-                $.each( veri.data.items, function(i, data) {
-                    sonuc.append('<div class="youtube">\
-                        <img src="' + data.thumbnail.sqDefault + '" alt="" />\
-                        <h3><a href="javascript:void(0)" onclick="$.youtubePlay(\'' + data.id + '\', \'' + data.content[5] + '\')">' + data.title + '</a></h3>\
-                        <p>' + data.description + '</p>\
-                    </div>\
-                    <div class="youtubeOynat" id="' + data.id + '"></div>');
+$(document).ready(function () {
+    $("#query").autocomplete({
+        source: function(request, response) {
+            $.getJSON("http://suggestqueries.google.com/complete/search?callback=?",
+                {
+                  "hl":"en", // Language
+                  "ds":"yt", // Restrict lookup to youtube
+                  "jsonp":"suggestCallBack", // jsonp callback function name
+                  "q":request.term, // query term
+                  "client":"youtube" // force youtube style response, i.e. jsonp
+                }
+            );
+            suggestCallBack = function (data) {
+                var suggestions = [];
+                $.each(data[1], function(key, val) {
+                    suggestions.push({"value":val[0]});
                 });
-            }
-            else {
-                sonuc.html('<div class="hata"><strong>' + kelime + '</strong> ile ilgili hiç video bulunamadı!</div>');
-            }
-        }
+                suggestions.length = 5; // prune suggestions list to only 5 items
+                response(suggestions);
+            };
+        },
     });
-}
-
-/* Youtube Video Oynatma Fonksiyonu */
-$.youtubePlay = function(yid, frame){
-    $('.youtubeOynat').slideUp().empty();
-    $('#'+yid).slideDown().html('<iframe src="'+ frame +'&autoplay=1" style="width: 100%; box-sizing: border-box; height: 300px" />');
-}
+});

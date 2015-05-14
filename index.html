@@ -2,38 +2,23 @@
 <html>
   <head>
     <title>Youtube?</title>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-    <script src="search.js"></script>
-    <script src="auto.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
   </head>
   <body>
     <div id="header">
-      <!--
-      <label> <input id="query" value='food' type="text"/><button id="search-button">Search</button></label>
-      -->
-      <div class="arama">
-          <form action="" onsubmit="return false">
-              <h2>Youtube API jQuery AutoComplete</h2>
-              <div class="ui-widget">
-                  <label for="youtube">Youtube Arama: </label>
-                  <input id="youtube" />
-                  <button id="submit">ARA</button>
-              </div>
-          </form>
-      </div>
-
-
-      <div id="sonuc"></div>
+      <label><input type="text" id="query"/><button id="search-button">Search</button></label>
     </div>
     <div id="results">
     </div>
     <div id="playerWrapper">
     </div>
-
+    <script src="search.js"></script>
+    <script src="auto.js"></script>
 
   </body>
 </html>

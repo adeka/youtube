@@ -2,13 +2,20 @@
 var key = 'AIzaSyDwozRpbCqV5G7GjCI0T1QB7QES27rjHWY';
 var baseURL = 'https://www.googleapis.com/youtube/v3';
 
+/*
+$(".ui-autocomplete").keypress(function(e) {
+        alert('You pressed enter!');
+});
+*/
 
+$( "#query" ).change(function() {
+  console.log("Asdf");
 
-
-
+});
 $("#search-button").click(function(){
     $("#results").empty();
     var query = $('#query').attr('value');
+    console.log(query);
     $.get(baseURL+'/search?part=snippet'+
                      '&q='+query+
                      '&maxResults=20'+
