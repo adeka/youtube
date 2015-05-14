@@ -7,38 +7,52 @@ $(".ui-autocomplete").keypress(function(e) {
         alert('You pressed enter!');
 });
 */
+setTimeout(function(){
 
-$( "#query" ).change(function() {
-  console.log("Asdf");
+}, 500);
+
+$( "#query" ).on('input', function() {
+  //console.log(  $("#query").val());
 
 });
-$("#search-button").click(function(){
-    $("#results").empty();
-    var query = $('#query').attr('value');
-    console.log(query);
-    $.get(baseURL+'/search?part=snippet'+
-                     '&q='+query+
-                     '&maxResults=20'+
-                     '&type=video'+
-                     '&key='+key, function(data, status){
-        console.log(data);
-        for(var i = 0; i< data.items.length; i++){
-          var id = data.items[i].id.videoId;
-          var thumbnailURL = data.items[i].snippet.thumbnails.default.url;
-          var titleText = data.items[i].snippet.title;
-          var title = "<div class='titleOverlay'>" + titleText + "</div>";
-          var thumb = "<div class='thumbWrapper'><img class='thumb' src=" + thumbnailURL + "></img></div>";
-          var result = "<div class='item' data-id=" + id + ">" + thumb + title + "</div>";
-          $("#results").append(result);
-        }
-        $(".item").click(function(){
-          $("#playerWrapper").empty();
-          $("#playerWrapper").append('<div id="player"></div>');
-          CreatePlayer($(this).data("id"));
-        });
-    });
+
+$('#query').keypress(function (e) {
+  if (e.which == 13) {
+    Search();
+    return false;    //<---- Add this line
+  }
 });
 
+$("#submit").click(function(){
+  Search();
+});
+
+function Search(){
+  $("#results").empty();
+  var query = $('#query').val();
+  console.log(query);
+  $.get(baseURL+'/search?part=snippet'+
+                   '&q='+query+
+                   '&maxResults=20'+
+                   '&type=video'+
+                   '&key='+key, function(data, status){
+      console.log(data);
+      for(var i = 0; i< data.items.length; i++){
+        var id = data.items[i].id.videoId;
+        var thumbnailURL = data.items[i].snippet.thumbnails.default.url;
+        var titleText = data.items[i].snippet.title;
+        var title = "<div class='titleOverlay'>" + titleText + "</div>";
+        var thumb = "<div class='thumbWrapper'><img class='thumb' src=" + thumbnailURL + "></img></div>";
+        var result = "<div class='item' data-id=" + id + ">" + thumb + title + "</div>";
+        $("#results").append(result);
+      }
+      $(".item").click(function(){
+        $("#playerWrapper").empty();
+        $("#playerWrapper").append('<div id="player"></div>');
+        CreatePlayer($(this).data("id"));
+      });
+  });
+}
 
 
 var player;
