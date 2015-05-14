@@ -97,8 +97,8 @@ body{
   float: left;
   width: 120px;
   background-color: rgba(255,255,255,.025);
-  padding: .5em;
-  margin: .2em;
+  //padding: .5em;
+//  margin: .2em;
   height: 120px;
   overflow:hidden;
   border-radius: 2px;

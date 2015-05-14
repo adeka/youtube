@@ -46,6 +46,7 @@ function Search(){
         var title = "<div class='titleOverlay'>" + titleText + "</div>";
         var thumb = "<div class='thumbWrapper'><img class='thumb' src=" + thumbnailURL + "></img></div>";
         var result = "<div class='item draggable' data-id=" + id + ">" + thumb + title + "</div>";
+        //var result = "<div class='item draggable'></div>";
         $("#results").append(result);
       }
       $(".item").click(function(){
@@ -73,21 +74,21 @@ function Search(){
             //items: "> .item",
             //handle: "div",
 
-            //tolerance: "pointer",
+            tolerance: "pointer",
             //distance: 60,
             cursorAt: { left: 60 },
             axis: "x",
             revert: true,
-
-            //helper: "clone",
-            placeholder: "sortable-placeholder",
+            //grid: [120, 120 ],
+            helper: "clone",
+            //placeholder: "sortable-placeholder",
 
             //zIndex: 9999,
             start: function(e, ui){
               //$(ui.placeholder).hide(200);
             },
             change: function (e,ui){
-              $(ui.placeholder).hide().show(200);
+              //$(ui.placeholder).hide().show(200);
             },
             scroll: false
           });
