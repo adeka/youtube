@@ -40,12 +40,12 @@ body{
 #results{
     width:260px;
     height: calc(100% - 40px - 135px  );
-    background-color: #222;
+    background-color: #111;
     left: 0;
     position: fixed;
     overflow-y: scroll;
     overflow-x: hidden;
-    z-index: -1;
+    z-index: -10;
 }
 
 #playerWrapper{
@@ -60,14 +60,19 @@ body{
   width: 100%;
   height: 100%;
 }
-#queue{
-  padding: .2em;
+#queueWrapper{
   position: fixed;
   bottom: 0;
   width: 100%;
   height: 135px;
-  overflow-x: hidden;
+  overflow-x: scroll;
   overflow-y: hidden;
+  background-color: #111;
+}
+
+#queue{
+  overflow-y: hidden;
+  width: 3000px;
 }
 
 .sortable-placeholder{
@@ -97,12 +102,12 @@ body{
   float: left;
   width: 120px;
   background-color: rgba(255,255,255,.025);
-  //padding: .5em;
-//  margin: .2em;
   height: 120px;
   overflow:hidden;
-  border-radius: 2px;
   z-index: 999;
+}
+.activeItem{
+  background-color: rgba(255,255,255,.5);
 }
 
 .item:hover{
@@ -117,6 +122,20 @@ body{
 .titleOverlay:hover{
   height: auto;
   z-index: 999;
+}
+
+.shadowGrad{
+  height: 80px;
+  width:260px;
+  position: fixed;
+  bottom:135px;
+  background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
 }
 /*
 .ui-autocomplete{
@@ -138,6 +157,6 @@ body{
 
 ::-webkit-scrollbar-thumb
 {
-  background: rgba(255,255,255, 0.05);
+  background: rgba(255,255,255, 0.1);
   border-radius: 5px;
 }
