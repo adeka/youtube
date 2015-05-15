@@ -1,6 +1,7 @@
 
 var key = 'AIzaSyDwozRpbCqV5G7GjCI0T1QB7QES27rjHWY';
 var baseURL = 'https://www.googleapis.com/youtube/v3';
+var player;
 
 /*
 $(".ui-autocomplete").keypress(function(e) {
@@ -29,6 +30,38 @@ $("#submit").click(function(){
 
 
 
+
+setTimeout(function(){
+  $("#playerWrapper").empty();
+  $("#playerWrapper").append('<div id="player"></div>');
+  CreatePlayer();
+}, 200);
+function CreatePlayer() {
+  player = new YT.Player('player', {
+    //videoId: id,
+    events: {
+      'onReady': onPlayerReady,
+      //'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+function onPlayerReady(event) {
+  event.target.playVideo();
+}
+
+var done = false;
+function onPlayerStateChange(event) {
+  if (event.data == YT.PlayerState.PLAYING && !done) {
+    //setTimeout(stopVideo, 6000);
+    done = true;
+  }
+}
+function stopVideo() {
+  player.stopVideo();
+}
+
+
 function Search(){
   $("#results").empty();
   var query = $('#query').val();
@@ -50,24 +83,9 @@ function Search(){
         $("#results").append(result);
       }
       $(".item").click(function(){
-        $("#playerWrapper").empty();
-        $("#playerWrapper").append('<div id="player"></div>');
-        CreatePlayer($(this).data("id"));
-      });
 
-      /*
-      $( "#queue" ).sortable({
-         axis: "x",
-         opacity: 0.5,
-         start: function(e, ui){
-         $(ui.placeholder).hide(300);
-         },
-         change: function (e,ui){
-         $(ui.placeholder).hide().show(300);
-         }
+        player.loadVideoById($(this).data("id"), 5, "large")
       });
-      $( "#queue" ).disableSelection();
-      */
 
       $(function() {
           $( "#queue" ).sortable({
@@ -101,34 +119,6 @@ function Search(){
             zIndex: 9999999,
             scroll: false
           });
-          //$( "ul, li" ).disableSelection();
         });
   });
-}
-
-
-var player;
-function CreatePlayer(id) {
-  player = new YT.Player('player', {
-    videoId: id,
-    events: {
-      'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
-    }
-  });
-}
-
-function onPlayerReady(event) {
-  event.target.playVideo();
-}
-
-var done = false;
-function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.PLAYING && !done) {
-    //setTimeout(stopVideo, 6000);
-    done = true;
-  }
-}
-function stopVideo() {
-  player.stopVideo();
 }

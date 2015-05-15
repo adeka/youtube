@@ -38,20 +38,20 @@ body{
   padding: .2em;
 }
 #results{
-    width:290px;
-    height: calc(100% - 30px - 135px);
+    width:260px;
+    height: calc(100% - 40px - 135px  );
     background-color: #222;
     left: 0;
     position: fixed;
     overflow-y: scroll;
     overflow-x: hidden;
-    z-index: 999;
+    z-index: -1;
 }
 
 #playerWrapper{
   position: fixed;
   right: 0;
-  width: calc(100% - 290px);
+  width: calc(100% - 260px);
   height: calc(100% - 30px - 135px);
   background-color: #000;
 }
