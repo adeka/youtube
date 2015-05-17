@@ -83,14 +83,22 @@ $("#player").append(cssLink);
 //YT.PlayerState.BUFFERING
 //YT.PlayerState.CUED
 function onPlayerStateChange(event) {
+  var currentId = player.getVideoData().video_id;
+
   if (event.data == YT.PlayerState.ENDED) {
     //setTimeout(stopVideo, 6000);
-    var currentId = player.getVideoData().video_id;
     var currentIndex = playlist.indexOf(currentId);
     if(currentIndex < playlist.length){
       player.loadVideoById(playlist[currentIndex+1]);
+
+
     }
     //console.log(playlist);
+  }
+  if (event.data == YT.PlayerState.PLAYING) {
+    $("#queue").find(".fa-play-circle").remove();
+    var currentVideo = $("#queue").find("[data-id='" + currentId + "']");
+    $(currentVideo).append("<i class='fa fa-play-circle animated bounceIn isPlaying'></i>");
   }
 }
 function stopVideo() {
@@ -112,12 +120,28 @@ function Search(){
         var thumbnailURL = data.items[i].snippet.thumbnails.default.url;
         var titleText = data.items[i].snippet.title;
         var title = "<div class='titleOverlay'>" + titleText + "</div>";
+
+        var related = "<i class='fa fa-search findRelated'></i>";
+        var add = "<i class='fa fa-plus-square findRelated'></i>";
+        var refresh = "<i class='fa fa-refresh findRelated'></i>";
+        var trash = "<i class='fa fa-trash findRelated'></i>";
+        var relatedButton = "<div class='thumbButton'>"+related+"</div>";
+        var addButton = "<div class='thumbButton'>"+add+"</div>";
+        var refreshButton = "<div class='thumbButton'>"+refresh+"</div>";
+        var trashButton = "<div class='thumbButton'>"+trash+"</div>";
+        var buttons = "<div class='thumbButtonWrapper'>" + relatedButton + addButton + refreshButton + trashButton + "</div>";
+
         var status = "<div class='status'></div>";
         var thumb = "<div class='thumbWrapper'><img class='thumb' src=" + thumbnailURL + "></img></div>";
-        var result = "<div class='item draggable' data-id=" + id + ">" + status + thumb + title + "</div>";
+        var result = "<div class='item draggable' data-id=" + id + ">" + buttons + thumb + title + "</div>";
         //var result = "<div class='item draggable'></div>";
         $("#results").append(result);
       }
+      /*
+      setTimeout(function(){
+        $("#results").find(".animated").removeClass("animated");
+      }, 1000);
+      */
       $(".item").click(function(){
         /*
         console.log("clicked");
@@ -145,9 +169,10 @@ function Search(){
             //grid: [120, 120 ],
             helper: "clone",
             //placeholder: "sortable-placeholder",
-            zIndex: 999999999,
+            zIndex: 99999,
 
             start: function(e, ui){
+
             },
             stop: function(e, ui){
               if(playlist.length > 0){
@@ -168,11 +193,15 @@ function Search(){
           });
 
           $( ".draggable" ).draggable({
+            start: function(e, ui){
+              //console.log(e);
+              //$(e.target).css("border", "5px solid red");
+            },
             connectToSortable: "#queue",
             helper: "clone",
             revert: "invalid",
             cursorAt: { left: 60 },
-            zIndex: 9999999999,
+            zIndex: 99999,
             scroll: false
           });
         });
