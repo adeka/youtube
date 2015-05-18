@@ -1,6 +1,7 @@
 
 var key = 'AIzaSyDwozRpbCqV5G7GjCI0T1QB7QES27rjHWY';
 var baseURL = 'https://www.googleapis.com/youtube/v3';
+var playlistURL = 'https://www.googleapis.com/youtube/v3/playlistItems';
 var player;
 var index = 0;
 var currentId;
@@ -110,12 +111,23 @@ function stopVideo() {
 function Search(){
   $("#results").empty();
   var query = $('#query').val();
+
+  //test playlist id: "PL3B9C0CBE7596009A"
+  ///*
   $.get(baseURL+'/search?part=snippet'+
                    '&q='+query+
                    '&maxResults=20'+
-                   '&type=video'+
+                   '&type=playlist&video&user'+
                    '&key='+key, function(data, status){
-      //console.log(data);
+  //*/
+  /*
+  $.get(playlistURL+'/?part=snippet'+
+                   '&playlistId=PL3B9C0CBE7596009A'+
+                   '&maxResults=50'+
+                   //'&pageToken=CDIQAA'+
+                   '&key='+key, function(data, status){
+ */
+      console.log(data);
       for(var i = 0; i< data.items.length; i++){
         var id = data.items[i].id.videoId;
         var thumbnailURL = data.items[i].snippet.thumbnails.default.url;

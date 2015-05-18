@@ -11,24 +11,59 @@ html{
 }
 
 body{
-  background-color: #111;
+  background-color: red;
   width: 100%;
   height: 100%;
   position: fixed;
   overflow: hidden;
 }
 
+#toolBar{
+  width:35px;
+  height: 100%;
+  background-color: #1b1b1b;
+  position: fixed;
+  left: 0;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
 
-#header{
+#results{
+    width:260px;
+    height: calc(100% - 65px - 135px  );
+    background-color: #111;
+    left: 35px;
+    position: fixed;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: -10;
+}
+
+#resultsMenu{
+  background-color: #1b1b1b;
+  width :260px;
+  height: 35px;
+  bottom: 165px;
+  left: 35px;
+  position: fixed;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+#searchBar{
   width: 100%;
   height: 30px;
-  z-index: 999;
+  background-color: #0C0C0C;
+  bottom: 135px;
+  left: 35px;
+  position: fixed;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 #query{
-  margin-top: -.1em;
+  color: #BBB;
   font-size: 1.6em;
-  width: 500px;
-  background-color: #EEE;
+  width: 300px;
+  background: none;
   border: none;
   padding: .2em;
 }
@@ -36,24 +71,12 @@ body{
   outline: 0;
 }
 #submit{
-  font-size: 1.5em;
-  padding: .2em;
+  font-size: 1.25em;
 }
-#results{
-    width:260px;
-    height: calc(100% - 40px - 135px  );
-    background-color: #111;
-    left: 0;
-    position: fixed;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    z-index: -10;
-}
-
 #playerWrapper{
   position: fixed;
   right: 0;
-  width: calc(100% - 260px);
+  width: calc(100% - 260px - 35px);
   height: calc(100% - 30px - 135px);
   background-color: #000;
 }
@@ -65,7 +88,8 @@ body{
 #queueWrapper{
   position: fixed;
   bottom: 0;
-  width: 100%;
+  left: 35px;
+  width: calc(100% - 35px);
   height: 135px;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -181,12 +205,18 @@ body{
   background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
 }
-/*
-.ui-autocomplete{
-  color: white;
-  background-color:black !important;
+
+.ui-widget-content {
+  border: none !important;
+  background: #111 !important;
+  color: #CCC !important;
 }
-*/
+
+.ui-state-focus{
+  border: 1px solid rgba(255,255,255,0) !important;
+  background: rgba(255,255,255,.2) !important;
+  color: #CCC !important;
+}
 
 ::-webkit-scrollbar
 {
