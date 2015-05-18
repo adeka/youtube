@@ -4,6 +4,7 @@ var baseURL = 'https://www.googleapis.com/youtube/v3';
 var player;
 var index = 0;
 var currentId;
+var currentIndex;
 var playlist = [];
 
 
@@ -122,6 +123,7 @@ function Search(){
         var title = "<div class='titleOverlay'>" + titleText + "</div>";
 
         var related = "<i class='fa fa-search findRelated'></i>";
+        var play = "<i class='fa fa-play-circle-o findRelated'></i>";
         var add = "<i class='fa fa-plus-square findRelated'></i>";
         var refresh = "<i class='fa fa-refresh findRelated'></i>";
         var trash = "<i class='fa fa-trash findRelated'></i>";
@@ -129,7 +131,8 @@ function Search(){
         var addButton = "<div class='thumbButton'>"+add+"</div>";
         var refreshButton = "<div class='thumbButton'>"+refresh+"</div>";
         var trashButton = "<div class='thumbButton'>"+trash+"</div>";
-        var buttons = "<div class='thumbButtonWrapper'>" + relatedButton + addButton + refreshButton + trashButton + "</div>";
+        var playButton = "<div class='thumbButton'>"+play+"</div>";
+        var buttons = "<div class='thumbButtonWrapper'>" + relatedButton + addButton + refreshButton + trashButton + playButton + "</div>";
 
         var status = "<div class='status'></div>";
         var thumb = "<div class='thumbWrapper'><img class='thumb' src=" + thumbnailURL + "></img></div>";
