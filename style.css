@@ -117,12 +117,20 @@ body{
   height: 100%;
 }
 #playerControls{
-  height:23px;
+  height:27px;
   width:60px;
+  position:absolute;
+  bottom:0;
+}
+
+#playerControls .cover{
+  height: 23px;
+  width: 100%;
   position:absolute;
   bottom:0;
   background-color: #1b1b1b;
 }
+
 #queueWrapper{
   position: fixed;
   bottom: 0;

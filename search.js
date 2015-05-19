@@ -47,18 +47,21 @@ function UpdatePlaylist(){
 setTimeout(function(){
   CreatePlayer();
 }, 200);
+/*
 setTimeout(function(){
   var n = player.getIframe();
-  //$(n).find("div").empty();
+  var controls = $(n).find(".html5-video-controls").clone();
   $("#playerWrapper").empty();
   $("#playerWrapper").append(n);
   $(".ytp-button-prev").css("display", "inline-block");
   $(".ytp-button-next").show();
+  $("#playerWrapper").append(controls);
 }, 1000);
+*/
 
 function CreatePlayer() {
   $("#playerWrapper").empty();
-  var controls = '<div id="playerControls"></div>';
+  var controls = '<div id="playerControls"><div class="cover"></div></div>';
   $("#playerWrapper").append(controls + '<div id="player"></div>');
   player = new YT.Player('player', {
     //videoId: id,
