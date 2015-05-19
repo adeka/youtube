@@ -47,9 +47,19 @@ function UpdatePlaylist(){
 setTimeout(function(){
   CreatePlayer();
 }, 200);
+setTimeout(function(){
+  var n = player.getIframe();
+  //$(n).find("div").empty();
+  $("#playerWrapper").empty();
+  $("#playerWrapper").append(n);
+  $(".ytp-button-prev").css("display", "inline-block");
+  $(".ytp-button-next").show();
+}, 1000);
+
 function CreatePlayer() {
   $("#playerWrapper").empty();
-  $("#playerWrapper").append('<div id="player"></div>');
+  var controls = '<div id="playerControls"></div>';
+  $("#playerWrapper").append(controls + '<div id="player"></div>');
   player = new YT.Player('player', {
     //videoId: id,
     events: {
@@ -64,13 +74,13 @@ function onPlayerError(event) {
   CreatePlayer();
 }
 function onPlayerReady(event) {
-  /*
-  $(".ytp-button-prev").css("display", "inline-block");
-  $(".ytp-button-next").show();
-  */
+
+
+
+
   //console.log(player);
   //event.target.playVideo();
-  /*
+/*
   var cssLink = document.createElement("link")
 cssLink.href = "iframe.css";
 cssLink .rel = "stylesheet";
@@ -184,7 +194,7 @@ function Search(){
             //grid: [120, 120 ],
             helper: "clone",
             //placeholder: "sortable-placeholder",
-            zIndex: 99999,
+            //zIndex: 99999,
 
             start: function(e, ui){
 
@@ -212,11 +222,13 @@ function Search(){
               //console.log(e);
               //$(e.target).css("border", "5px solid red");
             },
+            stack: ".item",
+            zIndex:10000,
             connectToSortable: "#queue",
             helper: "clone",
             revert: "invalid",
             cursorAt: { left: 60 },
-            zIndex: 99999,
+            //zIndex: 99999,
             scroll: false
           });
         });
