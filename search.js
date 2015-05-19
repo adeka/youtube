@@ -117,7 +117,7 @@ function Search(){
   $.get(baseURL+'/search?part=snippet'+
                    '&q='+query+
                    '&maxResults=20'+
-                   '&type=playlist&video&user'+
+                   '&type=video'+
                    '&key='+key, function(data, status){
   //*/
   /*

@@ -18,7 +18,7 @@ body{
   overflow: hidden;
 }
 
-#toolBar{
+#toolbar{
   width:35px;
   height: 100%;
   background-color: #1b1b1b;
@@ -28,10 +28,34 @@ body{
   overflow-x: hidden;
 }
 
+#toolbar .fa{
+  color: #777;
+  font-size: 1.5em;
+  padding: .4em;
+  left: 0;
+  background-color: rgba(255,255,255,0);
+  position: fixed;
+}
+#toolbar .fa:hover{
+  background-color: rgba(255,255,255,.2);
+}
+
+#submit{
+  bottom: 135px;
+}
+#queueButton{
+  bottom: 0px;
+}
+#resultsButton{
+  top: 0px;
+}
+
+
+
 #results{
     width:260px;
     height: calc(100% - 65px - 135px  );
-    background-color: #111;
+    background-color: #050505;
     left: 35px;
     position: fixed;
     overflow-y: scroll;
