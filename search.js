@@ -104,7 +104,7 @@ function onPlayerStateChange(event) {
     //setTimeout(stopVideo, 6000);
     var currentIndex = playlist.indexOf(currentId);
     if(currentIndex < playlist.length){
-      player.loadVideoById(playlist[currentIndex+1]);
+      player.loadVideoById(playlist[currentIndex+1].id);
 
 
     }
@@ -130,7 +130,7 @@ function Search(){
   $.get(baseURL+'/search?part=snippet'+
                    '&q='+query+
                    '&maxResults=20'+
-                   '&type=video'+
+                   //'&type=video'+
                    '&key='+key, function(data, status){
   //*/
   /*
@@ -243,7 +243,7 @@ function MatchQueue(){
   var ids = [];
   for(var i=0; i< queue.length; i++){
     if($(queue[i]).hasClass("item")){
-      ids.push(queue[i].dataset.id);
+      ids.push({id : queue[i].dataset.id, index: i});
     }
   };
   playlist = ids;
