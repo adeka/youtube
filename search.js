@@ -50,23 +50,26 @@ setTimeout(function(){
 
 setTimeout(function(){
   //var n = player.getIframe();
-  //var controls = $(n).find(".html5-video-controls").clone();
+  //var controls = $(n).find(".html5-video-controls").hide();
+  //$("#player").contents().find('div').hide();
   //$("#playerWrapper").empty();
   //$("#playerWrapper").append(n);
-  $(".ytp-button-prev").css("display", "inline-block");
-  $(".ytp-button-next").show();
+  //$(".ytp-button-prev").css("display", "inline-block");
+  //$(".ytp-button-next").show();
   //$("#playerWrapper").append(controls);
 }, 1000);
 
 
 function CreatePlayer() {
   $("#playerWrapper").empty();
-  var controls = '<div id="playerControls"><div class="cover"></div></div>';
-  $("#playerWrapper").append(controls + '<div id="player"></div>');
+  var controls = '<div class="html5-player-chrome"><div class="ytp-button ytp-button-prev" role="button" aria-label="Previous" tabindex="6000" aria-hidden="true" style="display: none;"></div><div class="ytp-button ytp-button-play" role="button" tabindex="6010" aria-label="Play"></div><div class="ytp-button ytp-button-next" role="button" aria-label="Next" tabindex="6020" aria-hidden="true" style="display: none;"></div><span class="ytp-volume-hover-area"><div class="ytp-volume-control"><div class="ytp-button ytp-button-volume" role="button" tabindex="6100" aria-label="mute toggle" data-value="max"></div><div class="ytp-volume-panel" role="slider" aria-valuemin="0" aria-valuemax="100" tabindex="6200" aria-valuenow="100" aria-valuetext="100% volume"><div class="ytp-volume-slider" draggable="true"><div class="ytp-volume-slider-foreground" style="left: 49px;"></div></div></div></div><div class="ytp-time-display html5-control" aria-hidden="true"><span class="ytp-time-current">0:00</span><span class="ytp-time-separator"> / </span><span class="ytp-time-duration">0:00</span><span class="ytp-time-live-badge">Live</span></div></span><div class="ytp-button ytp-button-airplay ytp-disabled" role="button" aria-label="AirPlay" aria-disabled="true" aria-hidden="true" style="display: none;"></div><div class="ytp-button ytp-button-fullscreen-enter" role="button" tabindex="6900" aria-label="Full screen" style="display: inline-block;"></div><div class="ytp-button ytp-size-toggle-large" role="button" aria-label="Theater mode" tabindex="6800" aria-hidden="true" style="display: none;"></div><div class="ytp-button ytp-button-watch-on-youtube" role="button" aria-label="Watch on YouTube.com" tabindex="6700"></div><div class="ytp-button ytp-settings-button" role="button" aria-label="Settings" tabindex="6600" aria-haspopup="true" id="settings_button"><div class=""></div></div><div class="ytp-button ytp-button-playlist" role="button" aria-label="Playlist" tabindex="6400"></div><div class="ytp-button ytp-button-watch-later" role="button" aria-label="Watch Later" tabindex="6300"></div></div>';
+  var controlCover = '<div id="playerControlCover"><div class="cover"></div>'+controls+'</div>';
+  $("#playerWrapper").append(controlCover + '<div id="player"></div>');
   player = new YT.Player('player', {
     playerVars: {
-      origin: "0.0.0.0:8000",
-      modestbranding: true
+      //origin: '',
+      //modestbranding: true,
+      autohide: 0
     },
     events: {
       'onReady': onPlayerReady,
@@ -251,6 +254,10 @@ function MatchQueue(){
   for(var i=0; i< queue.length; i++){
     $(queue[i]).attr("data-index", i);
 
+    if($(queue[i]).hasClass("draggable")){
+      $(queue[i]).removeClass("draggable");
+    }
+
     if($(queue[i]).hasClass("item")){
       ids.push(queue[i].dataset.id);
       //console.log($(queue[i]).data("index"));
@@ -258,7 +265,7 @@ function MatchQueue(){
 
     if($(queue[i]).attr("data-playing") == "true"){
       currentIndex = i;
-      console.log("playing");
+      //console.log("playing");
     }
   };
   playlist = ids;
