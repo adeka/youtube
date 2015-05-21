@@ -47,24 +47,27 @@ function UpdatePlaylist(){
 setTimeout(function(){
   CreatePlayer();
 }, 200);
-/*
+
 setTimeout(function(){
-  var n = player.getIframe();
-  var controls = $(n).find(".html5-video-controls").clone();
-  $("#playerWrapper").empty();
-  $("#playerWrapper").append(n);
+  //var n = player.getIframe();
+  //var controls = $(n).find(".html5-video-controls").clone();
+  //$("#playerWrapper").empty();
+  //$("#playerWrapper").append(n);
   $(".ytp-button-prev").css("display", "inline-block");
   $(".ytp-button-next").show();
-  $("#playerWrapper").append(controls);
+  //$("#playerWrapper").append(controls);
 }, 1000);
-*/
+
 
 function CreatePlayer() {
   $("#playerWrapper").empty();
   var controls = '<div id="playerControls"><div class="cover"></div></div>';
   $("#playerWrapper").append(controls + '<div id="player"></div>');
   player = new YT.Player('player', {
-    //videoId: id,
+    playerVars: {
+      origin: "0.0.0.0:8000",
+      modestbranding: true
+    },
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange,
@@ -98,21 +101,24 @@ $("#player").append(cssLink);
 //YT.PlayerState.BUFFERING
 //YT.PlayerState.CUED
 function onPlayerStateChange(event) {
-  var currentId = player.getVideoData().video_id;
+  //var currentId = player.getVideoData().video_id;
+  //var currentId = playlist[currentIndex];
+  var currentVideo = $("#queue").find("[data-index='" + currentIndex + "']");
 
   if (event.data == YT.PlayerState.ENDED) {
+    $(currentVideo).attr("data-playing", false);
+
     //setTimeout(stopVideo, 6000);
-    var currentIndex = playlist.indexOf(currentId);
+    //var currentIndex = playlist.indexOf(currentId);
     if(currentIndex < playlist.length){
-      player.loadVideoById(playlist[currentIndex+1].id);
-
-
+      currentIndex++;
+      player.loadVideoById(playlist[currentIndex]);
     }
     //console.log(playlist);
   }
   if (event.data == YT.PlayerState.PLAYING) {
     $("#queue").find(".fa-play-circle").remove();
-    var currentVideo = $("#queue").find("[data-id='" + currentId + "']");
+    $(currentVideo).attr("data-playing", true);
     $(currentVideo).append("<i class='fa fa-play-circle animated bounceIn isPlaying'></i>");
   }
 }
@@ -161,7 +167,7 @@ function Search(){
 
         var status = "<div class='status'></div>";
         var thumb = "<div class='thumbWrapper'><img class='thumb' src=" + thumbnailURL + "></img></div>";
-        var result = "<div class='item draggable' data-id=" + id + ">" + buttons + thumb + title + "</div>";
+        var result = "<div class='item draggable' data-id=" + id + " data-index=-1 data-playing=false>" + buttons + thumb + title + "</div>";
         //var result = "<div class='item draggable'></div>";
         $("#results").append(result);
       }
@@ -213,6 +219,7 @@ function Search(){
             receive: function (e,ui){
               if(playlist.length == 0){
                 var id = ui.sender[0].dataset.id;
+                currentIndex = 0;
                 player.loadVideoById(id);
                 MatchQueue();
               }
@@ -242,8 +249,16 @@ function MatchQueue(){
   var queue = $("#queue").children();
   var ids = [];
   for(var i=0; i< queue.length; i++){
+    $(queue[i]).attr("data-index", i);
+
     if($(queue[i]).hasClass("item")){
-      ids.push({id : queue[i].dataset.id, index: i});
+      ids.push(queue[i].dataset.id);
+      //console.log($(queue[i]).data("index"));
+    }
+
+    if($(queue[i]).attr("data-playing") == "true"){
+      currentIndex = i;
+      console.log("playing");
     }
   };
   playlist = ids;
