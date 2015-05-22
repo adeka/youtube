@@ -63,13 +63,33 @@ setTimeout(function(){
 
 function CreatePlayer() {
   $("#playerWrapper").empty();
-  var controls = '<div class="html5-player-chrome"><div class="ytp-button ytp-button-prev" role="button" aria-label="Previous" tabindex="6000" aria-hidden="true" style="display: none;"></div><div class="ytp-button ytp-button-play" role="button" tabindex="6010" aria-label="Play"></div><div class="ytp-button ytp-button-next" role="button" aria-label="Next" tabindex="6020" aria-hidden="true" style="display: none;"></div><span class="ytp-volume-hover-area"><div class="ytp-volume-control"><div class="ytp-button ytp-button-volume" role="button" tabindex="6100" aria-label="mute toggle" data-value="max"></div><div class="ytp-volume-panel" role="slider" aria-valuemin="0" aria-valuemax="100" tabindex="6200" aria-valuenow="100" aria-valuetext="100% volume"><div class="ytp-volume-slider" draggable="true"><div class="ytp-volume-slider-foreground" style="left: 49px;"></div></div></div></div><div class="ytp-time-display html5-control" aria-hidden="true"><span class="ytp-time-current">0:00</span><span class="ytp-time-separator"> / </span><span class="ytp-time-duration">0:00</span><span class="ytp-time-live-badge">Live</span></div></span><div class="ytp-button ytp-button-airplay ytp-disabled" role="button" aria-label="AirPlay" aria-disabled="true" aria-hidden="true" style="display: none;"></div><div class="ytp-button ytp-button-fullscreen-enter" role="button" tabindex="6900" aria-label="Full screen" style="display: inline-block;"></div><div class="ytp-button ytp-size-toggle-large" role="button" aria-label="Theater mode" tabindex="6800" aria-hidden="true" style="display: none;"></div><div class="ytp-button ytp-button-watch-on-youtube" role="button" aria-label="Watch on YouTube.com" tabindex="6700"></div><div class="ytp-button ytp-settings-button" role="button" aria-label="Settings" tabindex="6600" aria-haspopup="true" id="settings_button"><div class=""></div></div><div class="ytp-button ytp-button-playlist" role="button" aria-label="Playlist" tabindex="6400"></div><div class="ytp-button ytp-button-watch-later" role="button" aria-label="Watch Later" tabindex="6300"></div></div>';
-  var controlCover = '<div id="playerControlCover"><div class="cover"></div>'+controls+'</div>';
+
+  /*
+  var soundOff = '<span class="fa-stack">' +
+    '<i class="fa fa-volume-off fa-stack-1x"></i>' +
+    '<i class="fa fa-ban fa-stack-2x text-danger"></i>' +
+  '</span>';
+  */
+
+  var back = "<i class='fa fa-backward'></i>";
+  var play = "<i class='fa fa-play' id='play'></i>";
+  var forward = "<i class='fa fa-forward'></i>";
+  var soundMax = "<i class='fa fa-volume-up'></i>";
+  var soundMid = "<i class='fa fa-volume-down'></i>";
+  var soundMin = "<i class='fa fa-volume-off'></i>";
+
+  var repeat = "<i class='fa fa-history'></i>";
+  var controls = "<div id='playerControls'>"+back+play+forward+soundMin+soundMid+soundMax+repeat+"</div>";
+
+
+
+
+  var controlCover = controls+'<div id="playerControlCover"><div class="cover"></div></div>';
   $("#playerWrapper").append(controlCover + '<div id="player"></div>');
   player = new YT.Player('player', {
     playerVars: {
       //origin: '',
-      //modestbranding: true,
+      modestbranding: true,
       autohide: 0
     },
     events: {
@@ -122,7 +142,13 @@ function onPlayerStateChange(event) {
     }
     //console.log(playlist);
   }
+  if (event.data == YT.PlayerState.PAUSED) {
+    $("#play").removeClass("fa-pause");
+    $("#play").addClass("fa-play");
+  }
   if (event.data == YT.PlayerState.PLAYING) {
+    $("#play").removeClass("fa-play");
+    $("#play").addClass("fa-pause");
     $("#queue").find(".fa-play-circle").remove();
     $(currentVideo).attr("data-playing", true);
     $(currentVideo).append("<i class='fa fa-play-circle animated bounceIn isPlaying'></i>");
