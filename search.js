@@ -24,6 +24,7 @@ $( "#query" ).on('input', function() {
 
 });
 
+$('')
 $('#query').keypress(function (e) {
   if (e.which == 13) {
     Search();
@@ -74,10 +75,12 @@ function CreatePlayer() {
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange,
-      'onError': onPlayerError
+      'onError': onPlayerError,
     }
   });
 }
+
+
 
 function onPlayerError(event) {
   CreatePlayer();
@@ -276,3 +279,7 @@ function MatchQueue(){
 Array.prototype.insert = function (index, item) {
   this.splice(index, 0, item);
 };
+
+setInterval(function(){
+  $('.ytp-time-current').text(Math.floor(player.getDuration()/60) + ":" + player.getDuration()%60);
+},1000);

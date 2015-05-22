@@ -261,6 +261,16 @@ body{
   color: #CCC !important;
 }
 
+.html5-player-chrome{
+  background: none !important;
+}
+
+/*
+.ytp-volume-hover-area:hover .ytp-volume-panel{
+  width:60px;
+}
+*/
+
 ::-webkit-scrollbar
 {
   width: 12px;  /* for vertical scrollbars */
