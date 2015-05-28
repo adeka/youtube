@@ -36,6 +36,8 @@ $("#submit").click(function(){
   Search();
 });
 
+
+
 $("#queue").bind("DOMNodeInserted",function(){
   //UpdatePlaylist();
   //alert("child is appended");
@@ -71,9 +73,9 @@ function CreatePlayer() {
   '</span>';
   */
 
-  var back = "<i class='fa fa-backward'></i>";
+  var back = "<i class='fa fa-backward' id='backward'></i>";
   var play = "<i class='fa fa-play' id='play'></i>";
-  var forward = "<i class='fa fa-forward'></i>";
+  var forward = "<i class='fa fa-forward' id='forward'></i>";
   var soundMax = "<i class='fa fa-volume-up'></i>";
   var soundMid = "<i class='fa fa-volume-down'></i>";
   var soundMin = "<i class='fa fa-volume-off'></i>";
@@ -136,10 +138,7 @@ function onPlayerStateChange(event) {
 
     //setTimeout(stopVideo, 6000);
     //var currentIndex = playlist.indexOf(currentId);
-    if(currentIndex < playlist.length){
-      currentIndex++;
-      player.loadVideoById(playlist[currentIndex]);
-    }
+    playNext();
     //console.log(playlist);
   }
   if (event.data == YT.PlayerState.PAUSED) {
@@ -158,7 +157,19 @@ function stopVideo() {
   player.stopVideo();
 }
 
+function playNext(){
+  if(currentIndex < playlist.length){
+    currentIndex++;
+    player.loadVideoById(playlist[currentIndex]);
+  }
+}
 
+function playLast(){
+  if(currentIndex < playlist.length){
+    currentIndex--;
+    player.loadVideoById(playlist[currentIndex]);
+  }
+}
 function Search(){
   $("#results").empty();
   var query = $('#query').val();
@@ -203,6 +214,17 @@ function Search(){
         //var result = "<div class='item draggable'></div>";
         $("#results").append(result);
       }
+      $("#forward").click(function(){
+        playNext();
+      });
+
+      $("#backward").click(function(){
+        playLast();
+      });
+
+      $("#play").click(function(){
+        player.playVideo();
+      });
       /*
       setTimeout(function(){
         $("#results").find(".animated").removeClass("animated");
