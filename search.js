@@ -37,7 +37,6 @@ $("#submit").click(function(){
 });
 
 
-
 $("#queue").bind("DOMNodeInserted",function(){
   //UpdatePlaylist();
   //alert("child is appended");
@@ -79,9 +78,10 @@ function CreatePlayer() {
   var soundMax = "<i class='fa fa-volume-up'></i>";
   var soundMid = "<i class='fa fa-volume-down'></i>";
   var soundMin = "<i class='fa fa-volume-off'></i>";
+  var slider = "<div id='slider'></div>";
 
   var repeat = "<i class='fa fa-history'></i>";
-  var controls = "<div id='playerControls'>"+back+play+forward+soundMin+soundMid+soundMax+repeat+"</div>";
+  var controls = "<div id='playerControls'>"+back+play+forward+soundMin+soundMid+soundMax+repeat+slider+"</div>";
 
 
 
@@ -99,6 +99,18 @@ function CreatePlayer() {
       'onStateChange': onPlayerStateChange,
       'onError': onPlayerError,
     }
+  });
+  $(function() {
+    $( "#slider" ).slider({
+      range: "max",
+      min: 0,
+      max: 100,
+      step: 1
+      value: 50,
+      slide: function( event, ui ) {
+        player.setVolume(ui.value);
+      }
+    });
   });
 }
 
@@ -207,6 +219,7 @@ function Search(){
         var trashButton = "<div class='thumbButton'>"+trash+"</div>";
         var playButton = "<div class='thumbButton'>"+play+"</div>";
         var buttons = "<div class='thumbButtonWrapper'>" + relatedButton + addButton + refreshButton + trashButton + playButton + "</div>";
+        var volSlider = "<div class='sliderWrapper'>" + slider + "</div>";
 
         var status = "<div class='status'></div>";
         var thumb = "<div class='thumbWrapper'><img class='thumb' src=" + thumbnailURL + "></img></div>";
@@ -222,9 +235,41 @@ function Search(){
         playLast();
       });
 
-      $("#play").click(function(){
-        player.playVideo();
+      $(".fa-volume-off").click(function(){
+        (player.isMuted())? player.unMute() : player.mute();
       });
+
+      var dVol = 10;
+
+      $(".fa-volume-down").click(function(){
+        var v = player.getVolume();
+        console.log(v);
+        v-=dVol;
+        player.setVolume(v);
+        console.log(player.getVolume());
+      });
+
+      $(".fa-volume-up").click(function(){
+        var v = player.getVolume();
+        console.log(v);
+        v+=dVol;
+        player.setVolume(v);
+        console.log(player.getVolume());
+      });
+
+      $("#play").click(function(){
+        if(player.getPlayerState()==YT.PlayerState.PLAYING){
+          player.pauseVideo();
+           $("#play").removeClass("fa-pause");
+           $("#play").addClass("fa-play");
+        }
+        else if(player.getPlayerState()==YT.PlayerState.PAUSED){
+          player.playVideo(); 
+          $("#play").addClass("fa-pause");
+          $("#play").removeClass("fa-play");
+        }
+      });
+     
       /*
       setTimeout(function(){
         $("#results").find(".animated").removeClass("animated");
@@ -242,6 +287,8 @@ function Search(){
         player.loadVideoById($(this).data("id"), 5, "large")
         */
       });
+      
+
 
       $(function() {
           $( "#queue" ).sortable({

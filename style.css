@@ -221,6 +221,41 @@ body{
   width: 100%;
   margin-top: -10px;
 }
+#slider{
+  display: inline-block;
+  height: 16px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #333 #333 #777 #333;
+  border-radius: 25px;
+  position: absolute;
+  width:120px;
+  margin-top:.45em;
+}
+#slider .ui-widget-header {
+  background: #030303 50% 50% repeat-x !important;
+  color: #222222 !important;
+  font-weight: bold;
+}
+#slider .ui-widget-content {
+  border: 1px solid #aaaaaa;
+  background: #070003 50% 50% repeat-x !important;
+  color: #222222 !important;
+}
+#slider .ui-slider-handle { 
+  background: #444;
+  border: 1px solid #000;
+  border-radius: 10px;
+  margin-top: .2em;
+}
+#slider .ui-slider-handle {
+
+}
+.sliderWrapper{
+  height:40px;
+  float: left;
+  width: auto;
+}
 
 .thumbWrapper{
   width: 120px;
