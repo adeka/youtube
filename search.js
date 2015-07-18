@@ -105,7 +105,6 @@ function CreatePlayer() {
       range: "max",
       min: 0,
       max: 100,
-      step: 1
       value: 50,
       slide: function( event, ui ) {
         player.setVolume(ui.value);
