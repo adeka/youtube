@@ -120,6 +120,9 @@ function onPlayerError(event) {
 }
 function onPlayerReady(event) {
 
+  setInterval(function(){
+    $('.ytp-time-current').text(Math.floor(player.getDuration()/60) + ":" + player.getDuration()%60);
+    },1000);
 
 
 
@@ -169,14 +172,14 @@ function stopVideo() {
 }
 
 function playNext(){
-  if(currentIndex < playlist.length){
+  if(currentIndex < playlist.length-1){
     currentIndex++;
     player.loadVideoById(playlist[currentIndex]);
   }
 }
 
 function playLast(){
-  if(currentIndex < playlist.length){
+  if(currentIndex < playlist.length && currentIndex>0){
     currentIndex--;
     player.loadVideoById(playlist[currentIndex]);
   }
@@ -374,6 +377,3 @@ Array.prototype.insert = function (index, item) {
   this.splice(index, 0, item);
 };
 
-setInterval(function(){
-  $('.ytp-time-current').text(Math.floor(player.getDuration()/60) + ":" + player.getDuration()%60);
-},1000);
